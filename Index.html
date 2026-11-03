@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <style>
+    :root {
+      --primary: #1a73e8;
+      --primary-hover: #1557b0;
+      --danger: #d93025;
+      --bg: #f8f9fa;
+      --card: #ffffff;
+      --text: #202124;
+      --muted: #5f6368;
+      --border: #dadce0;
+    }
+    body {
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 24px 16px;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      background: var(--card);
+      max-width: 540px;
+      width: 100%;
+      padding: 28px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--border);
+    }
+    h1 {
+      font-size: 22px;
+      margin: 0 0 6px 0;
+    }
+    .subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .status-box {
+      background: #f1f3f4;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 12px;
+    }
+    .badge-active {
+      background: #e6f4ea;
+      color: #137333;
+    }
+    .badge-inactive {
+      background: #fce8e6;
+      color: #c5221f;
+    }
+    .form-group {
+      margin-bottom: 18px;
+    }
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    select, input[type="number"] {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 14px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      box-sizing: border-box;
+      background: #fff;
+    }
+    .hint {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 24px;
+    }
+    button {
+      flex: 1;
+      padding: 11px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+    .btn-danger {
+      background: #fce8e6;
+      color: var(--danger);
+      border: 1px solid #fad2cf;
+    }
+    .btn-danger:hover {
+      background: #fad2cf;
+    }
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .message {
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      display: none;
+    }
+    .message.success {
+      display: block;
+      background: #e6f4ea;
+      color: #137333;
+      border: 1px solid #ceead6;
+    }
+    .message.error {
+      display: block;
+      background: #fce8e6;
+      color: #c5221f;
+      border: 1px solid #fad2cf;
+    }
+    .info-card {
+      margin-top: 24px;
+      padding: 14px 16px;
+      background: #e8f0fe;
+      border: 1px solid #d2e3fc;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #174ea6;
+      line-height: 1.5;
+    }
+    .info-card strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+    .info-card ol {
+      margin: 6px 0 0 0;
+      padding-left: 20px;
+    }
+    .info-card li {
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Calendar Sync Manager</h1>
+    <div class="subtitle" id="userAccount">Loading your account...</div>
+
+    <div class="status-box">
+      <div>
+        <strong>Recurring Schedule:</strong>
+        <span id="scheduleBadge" class="badge badge-inactive">Checking...</span>
+      </div>
+      <div><strong>Last Sync:</strong> <span id="lastSyncText">—</span></div>
+    </div>
+
+    <div class="form-group">
+      <label for="sourceSelect">Source Calendar (Copy From)</label>
+      <select id="sourceSelect" disabled>
+        <option>Loading calendars...</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="destSelect">Destination Calendar (Copy To)</label>
+      <select id="destSelect" disabled>
+        <option>Loading calendars...</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="daysAhead">Sync Lookahead Window (Days)</label>
+      <input type="number" id="daysAhead" value="30" min="1" max="365" disabled>
+      <div class="hint">Deduplicates and copies events from today up to this many days ahead.</div>
+    </div>
+
+    <div class="form-group">
+      <label for="frequencySelect">Automatic Recurring Sync</label>
+      <select id="frequencySelect" disabled>
+        <option value="0">Manual Only (Run once now, do not repeat)</option>
+        <option value="1">Every 1 hour</option>
+        <option value="2">Every 2 hours</option>
+        <option value="6">Every 6 hours</option>
+        <option value="12">Every 12 hours</option>
+        <option value="24">Once a day (Every 24 hours)</option>
+      </select>
+    </div>
+
+    <div class="btn-row">
+      <button id="saveSyncBtn" class="btn-primary" onclick="handleSaveAndSync()" disabled>
+        Save &amp; Sync Now
+      </button>
+      <button id="stopBtn" class="btn-danger" onclick="handleStopRecurring()" style="display:none;">
+        Stop Auto-Sync
+      </button>
+    </div>
+
+    <div id="feedback" class="message"></div>
+
+    <div class="info-card">
+      <strong>How to Stop Automatic Sync at Any Time</strong>
+      <div>Every time a sync runs, duplicates are cleaned up and you receive an email report listing all changes and a link back to this page. To stop automatic syncing:</div>
+      <ol>
+        <li>Open this Web App (using your bookmark or the link inside any sync email).</li>
+        <li>Click the red <strong>Stop Auto-Sync</strong> button above (visible whenever a recurring schedule is active), <em>or</em> set <strong>Automatic Recurring Sync</strong> to <strong>Manual Only</strong> and click <strong>Save &amp; Sync Now</strong>.</li>
+      </ol>
+    </div>
+  </div>
+
+  <script>
+    window.onload = function() {
+      google.script.run
+        .withSuccessHandler(populateUI)
+        .withFailureHandler(showError)
+        .getInitialData();
+    };
+
+    function populateUI(data) {
+      document.getElementById('userAccount').textContent =
+        data.userEmail ? 'Signed in as ' + data.userEmail : 'Signed in to your Google Account';
+
+      const sourceSelect = document.getElementById('sourceSelect');
+      const destSelect = document.getElementById('destSelect');
+      sourceSelect.innerHTML = '';
+      destSelect.innerHTML = '';
+
+      data.calendars.forEach(function(cal) {
+        const label = cal.isPrimary ? cal.name + ' (Primary)' : cal.name;
+
+        const optSource = new Option(label, cal.id);
+        const optDest = new Option(label, cal.id);
+
+        sourceSelect.add(optSource);
+        destSelect.add(optDest);
+      });
+
+      if (data.settings.sourceId) sourceSelect.value = data.settings.sourceId;
+      if (data.settings.destId) destSelect.value = data.settings.destId;
+      document.getElementById('daysAhead').value = data.settings.daysAhead || 30;
+      document.getElementById('frequencySelect').value = String(data.settings.frequencyHours || 0);
+
+      updateStatusDisplay(data.settings.frequencyHours, data.settings.lastSync);
+      setControlsDisabled(false);
+    }
+
+    function updateStatusDisplay(freqHours, lastSync) {
+      const badge = document.getElementById('scheduleBadge');
+      const stopBtn = document.getElementById('stopBtn');
+      const freq = parseInt(freqHours, 10) || 0;
+
+      if (freq > 0) {
+        badge.textContent = 'Active (Every ' + freq + (freq === 1 ? ' hour)' : ' hours)');
+        badge.className = 'badge badge-active';
+        stopBtn.style.display = 'block';
+      } else {
+        badge.textContent = 'Manual Only (Off)';
+        badge.className = 'badge badge-inactive';
+        stopBtn.style.display = 'none';
+      }
+
+      if (lastSync) {
+        document.getElementById('lastSyncText').textContent = lastSync;
+      }
+    }
+
+    function handleSaveAndSync() {
+      clearMessage();
+      setControlsDisabled(true);
+      const saveBtn = document.getElementById('saveSyncBtn');
+      saveBtn.textContent = 'Cleaning & Syncing...';
+
+      const config = {
+        sourceId: document.getElementById('sourceSelect').value,
+        destId: document.getElementById('destSelect').value,
+        daysAhead: document.getElementById('daysAhead').value,
+        frequencyHours: document.getElementById('frequencySelect').value
+      };
+
+      google.script.run
+        .withSuccessHandler(function(res) {
+          setControlsDisabled(false);
+          saveBtn.textContent = 'Save & Sync Now';
+          updateStatusDisplay(res.frequencyHours, res.lastSync);
+
+          const scheduleMsg = res.recurringActive
+            ? ' Automatic sync is set for every ' + res.frequencyHours + ' hour(s).'
+            : ' Recurring sync is off.';
+          showSuccess(
+            'Sync complete! Copied ' + res.copiedCount + ' new event(s), removed ' +
+            res.removedCount + ' duplicate(s), and sent an email summary.' + scheduleMsg
+          );
+        })
+        .withFailureHandler(function(err) {
+          setControlsDisabled(false);
+          saveBtn.textContent = 'Save & Sync Now';
+          showError(err);
+        })
+        .saveAndSync(config);
+    }
+
+    function handleStopRecurring() {
+      clearMessage();
+      setControlsDisabled(true);
+
+      google.script.run
+        .withSuccessHandler(function() {
+          setControlsDisabled(false);
+          document.getElementById('frequencySelect').value = '0';
+          updateStatusDisplay(0, null);
+          showSuccess('Automatic recurring sync has been turned off. No further background syncs will run.');
+        })
+        .withFailureHandler(function(err) {
+          setControlsDisabled(false);
+          showError(err);
+        })
+        .stopRecurringSync();
+    }
+
+    function setControlsDisabled(disabled) {
+      document.getElementById('sourceSelect').disabled = disabled;
+      document.getElementById('destSelect').disabled = disabled;
+      document.getElementById('daysAhead').disabled = disabled;
+      document.getElementById('frequencySelect').disabled = disabled;
+      document.getElementById('saveSyncBtn').disabled = disabled;
+      document.getElementById('stopBtn').disabled = disabled;
+    }
+
+    function showSuccess(text) {
+      const el = document.getElementById('feedback');
+      el.className = 'message success';
+      el.textContent = text;
+    }
+
+    function showError(err) {
+      const el = document.getElementById('feedback');
+      el.className = 'message error';
+      el.textContent = err.message || String(err);
+    }
+
+    function clearMessage() {
+      const el = document.getElementById('feedback');
+      el.className = 'message';
+      el.textContent = '';
+    }
+  </script>
+</body>
+</html>
