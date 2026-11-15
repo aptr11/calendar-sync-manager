@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <base target="_top">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendar Sync Manager</title>
+  <link rel="icon" type="image/png" href="data:image/png;base64,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">
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
   <style>
     :root {
       --primary: #1a73e8;
@@ -14,8 +18,8 @@
       --border: #dadce0;
     }
     body {
-      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      background-color: var(--bg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
       color: var(--text);
       margin: 0;
       padding: 24px 16px;
@@ -29,7 +33,7 @@
       padding: 28px;
       border-radius: 12px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-      border: 1px solid var(--border);
+      box-sizing: border-box;
     }
     h1 {
       font-size: 22px;
@@ -39,50 +43,70 @@
       font-size: 13px;
       color: var(--muted);
       margin-bottom: 20px;
+      line-height: 1.4;
+      word-break: break-all;
+    }
+    .subtitle strong {
+      color: var(--text);
+      font-weight: 600;
     }
     .status-box {
-      background: #f1f3f4;
+      background: #e8f0fe;
+      border: 1px solid #d2e3fc;
       border-radius: 8px;
-      padding: 12px 16px;
+      padding: 12px 14px;
       margin-bottom: 20px;
       font-size: 13px;
-      line-height: 1.6;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
     }
     .badge {
       display: inline-block;
-      padding: 2px 8px;
+      padding: 3px 8px;
       border-radius: 12px;
-      font-weight: 600;
-      font-size: 12px;
+      font-size: 11px;
+      font-weight: bold;
     }
     .badge-active {
       background: #e6f4ea;
       color: #137333;
     }
     .badge-inactive {
-      background: #fce8e6;
-      color: #c5221f;
+      background: #f1f3f4;
+      color: #5f6368;
     }
     .form-group {
       margin-bottom: 18px;
     }
     label {
       display: block;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
       margin-bottom: 6px;
     }
     select, input[type="number"] {
       width: 100%;
-      padding: 10px 12px;
+      padding: 9px 12px;
       font-size: 14px;
       border: 1px solid var(--border);
       border-radius: 6px;
-      box-sizing: border-box;
       background: #fff;
+      box-sizing: border-box;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    select:focus, input[type="number"]:focus {
+      border-color: var(--primary);
+    }
+    select:disabled, input[type="number"]:disabled {
+      background: #f1f3f4;
+      cursor: not-allowed;
     }
     .hint {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--muted);
       margin-top: 4px;
     }
@@ -92,37 +116,36 @@
       margin-top: 24px;
     }
     button {
-      flex: 1;
-      padding: 11px 16px;
+      padding: 10px 16px;
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 500;
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      transition: background 0.15s;
-    }
-    .btn-primary {
-      background: var(--primary);
-      color: white;
-    }
-    .btn-primary:hover {
-      background: var(--primary-hover);
-    }
-    .btn-danger {
-      background: #fce8e6;
-      color: var(--danger);
-      border: 1px solid #fad2cf;
-    }
-    .btn-danger:hover {
-      background: #fad2cf;
+      transition: background 0.2s;
     }
     button:disabled {
       opacity: 0.6;
       cursor: not-allowed;
     }
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      flex: 1;
+    }
+    .btn-primary:hover:not(:disabled) {
+      background: var(--primary-hover);
+    }
+    .btn-danger {
+      background: var(--danger);
+      color: #fff;
+    }
+    .btn-danger:hover:not(:disabled) {
+      background: #b3261e;
+    }
     .message {
       margin-top: 16px;
-      padding: 12px;
+      padding: 10px 12px;
       border-radius: 6px;
       font-size: 13px;
       display: none;
@@ -139,27 +162,115 @@
       color: #c5221f;
       border: 1px solid #fad2cf;
     }
-    .info-card {
+
+    /* Collapsible Instructions Card */
+    .instructions-card {
       margin-top: 24px;
-      padding: 14px 16px;
-      background: #e8f0fe;
+      background: #f8fafd;
       border: 1px solid #d2e3fc;
       border-radius: 8px;
+      overflow: hidden;
       font-size: 13px;
+      line-height: 1.5;
+      transition: border-color 0.2s;
+    }
+    .instructions-card:hover {
+      border-color: #aecbfa;
+    }
+    .instructions-toggle-btn {
+      width: 100%;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #e8f0fe;
+      border: none;
       color: #174ea6;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: left;
+      user-select: none;
+      transition: background 0.15s;
+    }
+    .instructions-toggle-btn:hover {
+      background: #dbe7fc;
+    }
+    .instructions-toggle-btn:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: -2px;
+    }
+    .instructions-header-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .instructions-header-right {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #1967d2;
+    }
+    .chevron-icon {
+      transition: transform 0.25s ease;
+      display: block;
+    }
+    .chevron-icon.rotated {
+      transform: rotate(180deg);
+    }
+    .instructions-content {
+      padding: 14px 16px;
+      border-top: 1px solid #d2e3fc;
+      background: #ffffff;
+      color: #3c4043;
+    }
+    .instructions-section + .instructions-section {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid #e8eaed;
+    }
+    .instructions-section strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #174ea6;
+      margin-bottom: 6px;
+    }
+    .instructions-section p {
+      margin: 0 0 8px 0;
+      font-size: 12.5px;
+      color: #3c4043;
       line-height: 1.5;
     }
-    .info-card strong {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 14px;
-    }
-    .info-card ol {
-      margin: 6px 0 0 0;
+    .instructions-section ol, .instructions-section ul {
+      margin: 4px 0 0 0;
       padding-left: 20px;
+      font-size: 12.5px;
+      color: #3c4043;
+      line-height: 1.5;
     }
-    .info-card li {
-      margin-bottom: 4px;
+    .instructions-section li {
+      margin-bottom: 6px;
+    }
+    .instructions-section li:last-child {
+      margin-bottom: 0;
+    }
+    .instructions-section li strong {
+      display: inline;
+      color: var(--text);
+      font-size: 12.5px;
+    }
+    .alert-box {
+      background: #fef7e0;
+      border: 1px solid #feefc3;
+      color: #7a4f01;
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      margin-bottom: 10px;
+      line-height: 1.4;
     }
   </style>
 </head>
@@ -219,13 +330,46 @@
 
     <div id="feedback" class="message"></div>
 
-    <div class="info-card">
-      <strong>How to Stop Automatic Sync at Any Time</strong>
-      <div>Every time a sync runs, duplicates are cleaned up and you receive an email report listing all changes and a link back to this page. To stop automatic syncing:</div>
-      <ol>
-        <li>Open this Web App (using your bookmark or the link inside any sync email).</li>
-        <li>Click the red <strong>Stop Auto-Sync</strong> button above (visible whenever a recurring schedule is active), <em>or</em> set <strong>Automatic Recurring Sync</strong> to <strong>Manual Only</strong> and click <strong>Save &amp; Sync Now</strong>.</li>
-      </ol>
+    <!-- Collapsible Instructions at the bottom -->
+    <div class="instructions-card">
+      <button type="button" class="instructions-toggle-btn" id="instructionsToggle" onclick="toggleInstructions()" aria-expanded="false" title="Click to toggle instructions">
+        <span class="instructions-header-title">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+          </svg>
+          Instructions &amp; Multi-User Guide
+        </span>
+        <span class="instructions-header-right">
+          <span id="instructionsToggleText">Show</span>
+          <svg id="instructionsChevron" class="chevron-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </span>
+      </button>
+
+      <div id="instructionsContent" class="instructions-content" style="display: none;">
+        <div class="instructions-section">
+          <strong>How to Stop Automatic Sync at Any Time</strong>
+          <p>Every time a sync runs, duplicates are cleaned up and you receive an email report listing all changes and a link back to this page. To stop automatic syncing:</p>
+          <ol>
+            <li>Open this Web App (using your bookmark or the link inside any sync email).</li>
+            <li>Click the red <strong>Stop Auto-Sync</strong> button above (visible whenever a recurring schedule is active), <em>or</em> set <strong>Automatic Recurring Sync</strong> to <strong>Manual Only</strong> and click <strong>Save &amp; Sync Now</strong>.</li>
+          </ol>
+        </div>
+
+        <div class="instructions-section">
+          <strong>Multi-User &amp; Multiple Accounts Setup</strong>
+          <div class="alert-box">
+            <strong>Note on multi-account switching:</strong> Due to technical difficulties with Google Apps Script multi-session handling (which causes Google Drive "unable to open file" errors and session collisions), in-app account switching is not supported.
+          </div>
+          <p>To use this application with multiple Google accounts (e.g. personal and work) or to set up sync for a different user, please use one of the following methods:</p>
+          <ul>
+            <li><strong>Different Chrome Profile (Recommended):</strong> Create or switch to a dedicated Google Chrome profile for each Google account. This provides complete session isolation and prevents all cookie collision issues.</li>
+            <li><strong>Other Browser:</strong> Open the Web App URL in another browser (e.g., Firefox, Safari, Microsoft Edge, Brave) logged into the other Google account.</li>
+            <li><strong>Incognito / Private Window:</strong> Open an Incognito window, sign into the target Google account, and access the Web App.</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -238,8 +382,12 @@
     };
 
     function populateUI(data) {
-      document.getElementById('userAccount').textContent =
-        data.userEmail ? 'Signed in as ' + data.userEmail : 'Signed in to your Google Account';
+      const userAccountEl = document.getElementById('userAccount');
+      if (data.userEmail) {
+        userAccountEl.innerHTML = 'Signed in as <strong>' + escapeHtml(data.userEmail) + '</strong>';
+      } else {
+        userAccountEl.textContent = 'Signed in to your Google Account';
+      }
 
       const sourceSelect = document.getElementById('sourceSelect');
       const destSelect = document.getElementById('destSelect');
@@ -248,12 +396,8 @@
 
       data.calendars.forEach(function(cal) {
         const label = cal.isPrimary ? cal.name + ' (Primary)' : cal.name;
-
-        const optSource = new Option(label, cal.id);
-        const optDest = new Option(label, cal.id);
-
-        sourceSelect.add(optSource);
-        destSelect.add(optDest);
+        sourceSelect.add(new Option(label, cal.id));
+        destSelect.add(new Option(label, cal.id));
       });
 
       if (data.settings.sourceId) sourceSelect.value = data.settings.sourceId;
@@ -263,6 +407,36 @@
 
       updateStatusDisplay(data.settings.frequencyHours, data.settings.lastSync);
       setControlsDisabled(false);
+    }
+
+    function toggleInstructions() {
+      const content = document.getElementById('instructionsContent');
+      const toggleBtn = document.getElementById('instructionsToggle');
+      const toggleText = document.getElementById('instructionsToggleText');
+      const chevron = document.getElementById('instructionsChevron');
+      const isHidden = content.style.display === 'none';
+
+      if (isHidden) {
+        content.style.display = 'block';
+        toggleBtn.setAttribute('aria-expanded', 'true');
+        toggleText.textContent = 'Hide';
+        chevron.classList.add('rotated');
+      } else {
+        content.style.display = 'none';
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        toggleText.textContent = 'Show';
+        chevron.classList.remove('rotated');
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
     }
 
     function updateStatusDisplay(freqHours, lastSync) {

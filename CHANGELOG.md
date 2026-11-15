@@ -4,6 +4,17 @@ All notable changes to this project are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2026-11-16
+
+### Changed
+* **Removed In-App Multi-User Switcher:** Due to technical difficulties with Google Apps Script multi-session handling (account collision and Google Drive authorization errors), removed in-app multi-account switcher modal and profile token fetching.
+* **Collapsible Instructions Card:** Added a toggle to collapse and expand the instructions card at the bottom of the interface, keeping the sync controls clean, compact, and accessible.
+* **Multi-Account Guidance:** Added clear recommendations in the collapsible instructions card and README suggesting that users managing multiple Google accounts use a separate Chrome profile (recommended), a different browser, or an Incognito window for 100% session isolation.
+* **Custom Favicon:** Generated and configured a custom branded favicon from `img/icon.jpeg` embedded as a base64 data URI in `Index.html` and configured via `HtmlOutput.setFaviconUrl()` in `Code.gs`.
+* **Cleaned OAuth Scopes:** Removed unnecessary profile and external request scopes, retaining only the minimal required permissions (`calendar`, `scriptapp`, `send_mail`, and `userinfo.email`) in `appsscript.json`.
+
+---
+
 ## [1.3.0] - 2026-11-03
 
 ### Added
