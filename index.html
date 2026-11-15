@@ -50,6 +50,29 @@
       color: var(--text);
       font-weight: 600;
     }
+
+    /* Preview / Demo Banner */
+    .demo-banner {
+      background: #fef7e0;
+      border: 1px solid #f9ab00;
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-bottom: 20px;
+      font-size: 12.5px;
+      color: #7a4f01;
+      line-height: 1.45;
+      display: none;
+    }
+    .demo-banner-title {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 3px;
+      color: #b06000;
+    }
+
     .status-box {
       background: #e8f0fe;
       border: 1px solid #d2e3fc;
@@ -279,6 +302,17 @@
     <h1>Calendar Sync Manager</h1>
     <div class="subtitle" id="userAccount">Loading your account...</div>
 
+    <!-- Demo Banner (Active in GitHub Pages / static preview mode) -->
+    <div id="demoBanner" class="demo-banner">
+      <div class="demo-banner-title">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+        </svg>
+        <strong>GitHub Pages Preview Mode (Interactive UI Demo)</strong>
+      </div>
+      <div>This is a live frontend preview with simulated calendar data. Real synchronization and background schedules require deploying to Google Apps Script.</div>
+    </div>
+
     <div class="status-box">
       <div>
         <strong>Recurring Schedule:</strong>
@@ -374,7 +408,31 @@
   </div>
 
   <script>
+    const isMockMode = (typeof google === 'undefined' || !google.script || !google.script.run);
+
     window.onload = function() {
+      if (isMockMode) {
+        document.getElementById('demoBanner').style.display = 'block';
+        const mockData = {
+          userEmail: 'demo.user@example.com',
+          calendars: [
+            { id: 'cal_primary', name: 'Personal', isPrimary: true, isOwned: true },
+            { id: 'cal_work', name: 'Work & Projects', isPrimary: false, isOwned: true },
+            { id: 'cal_family', name: 'Family & Shared', isPrimary: false, isOwned: true },
+            { id: 'cal_fitness', name: 'Fitness & Sports', isPrimary: false, isOwned: false }
+          ],
+          settings: {
+            sourceId: 'cal_primary',
+            destId: 'cal_work',
+            daysAhead: 30,
+            frequencyHours: 6,
+            lastSync: 'Today at 09:30 AM'
+          }
+        };
+        populateUI(mockData);
+        return;
+      }
+
       google.script.run
         .withSuccessHandler(populateUI)
         .withFailureHandler(showError)
@@ -463,7 +521,7 @@
       clearMessage();
       setControlsDisabled(true);
       const saveBtn = document.getElementById('saveSyncBtn');
-      saveBtn.textContent = 'Cleaning & Syncing...';
+      saveBtn.textContent = isMockMode ? 'Cleaning & Syncing (Demo)...' : 'Cleaning & Syncing...';
 
       const config = {
         sourceId: document.getElementById('sourceSelect').value,
@@ -471,6 +529,23 @@
         daysAhead: document.getElementById('daysAhead').value,
         frequencyHours: document.getElementById('frequencySelect').value
       };
+
+      if (isMockMode) {
+        setTimeout(function() {
+          setControlsDisabled(false);
+          saveBtn.textContent = 'Save & Sync Now';
+          const freq = parseInt(config.frequencyHours, 10) || 0;
+          updateStatusDisplay(freq, 'Just now');
+
+          const scheduleMsg = freq > 0
+            ? ' Automatic sync is set for every ' + freq + ' hour(s).'
+            : ' Recurring sync is off.';
+          showSuccess(
+            'Sync complete! (Simulation) Copied 3 new event(s), removed 1 duplicate(s), and simulated an email summary.' + scheduleMsg
+          );
+        }, 800);
+        return;
+      }
 
       google.script.run
         .withSuccessHandler(function(res) {
@@ -497,6 +572,16 @@
     function handleStopRecurring() {
       clearMessage();
       setControlsDisabled(true);
+
+      if (isMockMode) {
+        setTimeout(function() {
+          setControlsDisabled(false);
+          document.getElementById('frequencySelect').value = '0';
+          updateStatusDisplay(0, null);
+          showSuccess('Automatic recurring sync has been turned off. (Simulation)');
+        }, 500);
+        return;
+      }
 
       google.script.run
         .withSuccessHandler(function() {

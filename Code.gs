@@ -2,7 +2,13 @@
  * Serves the HTML Web App interface.
  */
 function doGet() {
-  return HtmlService.createHtmlOutputFromFile('Index')
+  let output;
+  try {
+    output = HtmlService.createHtmlOutputFromFile('index');
+  } catch (e) {
+    output = HtmlService.createHtmlOutputFromFile('Index');
+  }
+  return output
     .setTitle('Calendar Sync Manager')
     .setFaviconUrl('https://raw.githubusercontent.com/aptr11/calendar-sync-manager/main/img/favicon.png')
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)

@@ -2,8 +2,30 @@
 
 A Google Apps Script Web App that copies new events from a source Google Calendar to a destination Google Calendar, automatically removes duplicate events in both calendars, sets up user-specific recurring schedules, and sends an email report after every run.
 
+## Live Demo & GitHub Pages Preview
+
+You can test and preview the complete web interface directly via **GitHub Pages**:
+
+* **Live Demo:** [https://aptr11.github.io/calendar-sync-manager/](https://aptr11.github.io/calendar-sync-manager/)
+
+### How GitHub Pages Preview Works
+* **Interactive UI Simulation:** When hosted statically on GitHub Pages (or opened locally in any browser), the app automatically enters **Preview / Demo Mode**. It simulates realistic Google Calendar data, enables all dropdowns, demonstrates the collapsible instructions, and simulates sync actions and recurring trigger toggles.
+* **Why Real Syncing Requires Google Apps Script:** Live calendar synchronization, user-specific data storage, and automatic background triggers require Google's authenticated server environment (`script.google.com`). For real syncing, follow the **Deployment Guide** below.
+
+### How to Enable GitHub Pages (For Fork Owners & Potential Users)
+If you fork this repository or want to host your own live UI preview on GitHub:
+1. Open your repository on GitHub and click the **Settings** tab.
+2. In the left navigation menu, click **Pages** (under the **Code and automation** section).
+3. Under **Build and deployment** > **Source**, select **Deploy from a branch**.
+4. Under **Branch**, select **`main`** and keep the folder set to **`/(root)`**.
+5. Click **Save**.
+6. Within 1–2 minutes, GitHub Pages will deploy your site and show the active URL at the top of the page (e.g., `https://<your-username>.github.io/calendar-sync-manager/`).
+
+---
+
 ## Features
 
+* **Interactive Preview & Full Deployment:** Test the user interface immediately via GitHub Pages, then deploy to Google Apps Script for live background synchronization.
 * **Active Duplicate Cleanup:** Before copying events, the script scans the lookahead window in both the destination and source calendars (when writable) and deletes duplicate entries that share the same title, timeframe, all-day status, location, and description.
 * **Zero-Duplicate Syncing:** Uses an in-memory `Set` of multi-attribute event signatures to ensure an event already present in the destination calendar is never copied again.
 * **Customizable Lookahead & Schedule:** Users can choose how many days ahead to sync (1–365 days) and run the sync manually or automatically every 1, 2, 6, 12, or 24 hours.
@@ -17,8 +39,9 @@ A Google Apps Script Web App that copies new events from a source Google Calenda
 ## Repository Contents
 
 * **`Code.gs`** — Server-side Google Apps Script handling calendar queries, signature matching, deduplication, trigger management, user properties, and email notifications.
-* **`Index.html`** — Responsive web interface allowing users to select calendars, configure sync intervals, trigger manual syncs, and toggle instructions.
+* **`index.html`** — Responsive web interface allowing users to select calendars, configure sync intervals, trigger manual syncs, and toggle instructions. Includes automatic static preview fallback for GitHub Pages.
 * **`appsscript.json`** — Apps Script project manifest specifying runtime version, web app execution settings, and explicit OAuth scopes.
+* **`.nojekyll`** — Disables Jekyll processing on GitHub Pages for direct static file serving.
 * **`img/`** — Project graphics including `icon.jpeg`, `favicon.png`, and `favicon.ico`.
 * **`CHANGELOG.md`** — Project release history.
 
@@ -32,7 +55,7 @@ A Google Apps Script Web App that copies new events from a source Google Calenda
 2. Rename the project to **Calendar Sync Manager**.
 3. In the default **`Code.gs`** file, replace all placeholder code with the contents of [`Code.gs`](./Code.gs) from this repository.
 4. Click the **+** icon next to **Files** in the left sidebar and select **HTML**.
-5. Name the file **`Index`** (case-sensitive; Google Apps Script adds `.html` automatically) and paste the contents of [`Index.html`](./Index.html).
+5. Name the file **`index`** (or `Index`; case-insensitive; Google Apps Script adds `.html` automatically) and paste the contents of [`index.html`](./index.html).
 6. Enable and update the manifest:
    * In the left sidebar, click **Project Settings** (the gear icon ⚙️).
    * Under **General settings**, check the box: **Show "appsscript.json" manifest file in editor**.

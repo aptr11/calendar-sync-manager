@@ -6,11 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [1.4.0] - 2026-11-16
 
+### Added
+* **GitHub Pages Live Preview & Demo Mode:** Added automated fallback detection in `index.html` allowing the entire frontend to be previewed and tested on GitHub Pages (or locally) without crashing on `google.script.run`. Simulates sample calendars, recurring schedules, and instant sync responses.
+* **GitHub Pages Deployment Documentation:** Added step-by-step instructions in `README.md` explaining how users and repository forkers can enable GitHub Pages preview.
+
 ### Changed
+* **Renamed Web Entry Point:** Renamed `Index.html` to lowercase `index.html` for GitHub Pages compliance, with dual `'index'` / `'Index'` loading support in `Code.gs`.
 * **Removed In-App Multi-User Switcher:** Due to technical difficulties with Google Apps Script multi-session handling (account collision and Google Drive authorization errors), removed in-app multi-account switcher modal and profile token fetching.
 * **Collapsible Instructions Card:** Added a toggle to collapse and expand the instructions card at the bottom of the interface, keeping the sync controls clean, compact, and accessible.
 * **Multi-Account Guidance:** Added clear recommendations in the collapsible instructions card and README suggesting that users managing multiple Google accounts use a separate Chrome profile (recommended), a different browser, or an Incognito window for 100% session isolation.
-* **Custom Favicon:** Generated and configured a custom branded favicon from `img/icon.jpeg` embedded as a base64 data URI in `Index.html` and configured via `HtmlOutput.setFaviconUrl()` in `Code.gs`.
+* **Custom Favicon:** Generated and configured a custom branded favicon from `img/icon.jpeg` embedded as a base64 data URI in `index.html` and configured via `HtmlOutput.setFaviconUrl()` in `Code.gs`.
 * **Cleaned OAuth Scopes:** Removed unnecessary profile and external request scopes, retaining only the minimal required permissions (`calendar`, `scriptapp`, `send_mail`, and `userinfo.email`) in `appsscript.json`.
 
 ---
